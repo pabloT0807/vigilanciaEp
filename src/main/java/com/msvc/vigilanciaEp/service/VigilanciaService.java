@@ -22,7 +22,7 @@ public class VigilanciaService {
     /*INYECTAMOS LOS REPOSITORIOS*/
     @Autowired
     private VigilanciaRepository vigilanciaRepository;
-//bola bolaMovil
+//bola bolaMovil bola
     private static final Logger logger = Logger.getLogger(VigilanciaService.class.getName());
 
     public void guardarMes(Vigilancia vigilancia) {
