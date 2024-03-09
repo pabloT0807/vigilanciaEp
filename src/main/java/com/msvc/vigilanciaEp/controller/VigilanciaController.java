@@ -33,11 +33,11 @@ public class VigilanciaController {
         vigilanciaService.guardarMes(vigilancia);
     }
 
-    @PostMapping("/calcular-prediccion/{nombreVirus}/{mes}")
-    public ResponseEntity<String> calcularPrediccion(@PathVariable String nombreVirus,@PathVariable String mes){
+    @PostMapping("/calcular-prediccion/{alcaldia}/{nombreVirus}/{mes}")
+    public ResponseEntity<String> calcularPrediccion(@PathVariable String alcaldia,@PathVariable String nombreVirus,@PathVariable String mes){
 
         try{
-            vigilanciaService.calcularCasosPredectibles(nombreVirus,mes);
+            vigilanciaService.calcularCasosPredectibles(alcaldia,nombreVirus,mes);
             return  ResponseEntity.ok("prediccion calculada");
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");

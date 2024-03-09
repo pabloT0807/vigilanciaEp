@@ -1,32 +1,24 @@
 package com.msvc.vigilanciaEp.model;
 
+import java.util.List;
+
 public class BacteriasCasos {
-    private String nombre;
-    private String mes;
-    private int casosHistoricos;
-    private int casosPredictibles;
+    private String nombreBacterias;
+    private List<MesCasos> casosBacterias;
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreBacterias() {
+        return nombreBacterias;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreBacterias(String nombreBacterias) {
+        this.nombreBacterias = nombreBacterias;
     }
 
-    public int getCasosHistoricos() {
-        return casosHistoricos;
+    public List<MesCasos> getCasosBacterias() {
+        return casosBacterias;
     }
 
-    public void setCasosHistoricos(int casosHistoricos) {
-        this.casosHistoricos = casosHistoricos;
-    }
-
-    public int getCasosPredictibles() {
-        return casosPredictibles;
-    }
-
-    public void setCasosPredictibles(int casosPredictibles) {
-        this.casosPredictibles = casosPredictibles;
+    public void setCasosBacterias(List<MesCasos> casosBacterias) {
+        this.casosBacterias = casosBacterias;
     }
 }

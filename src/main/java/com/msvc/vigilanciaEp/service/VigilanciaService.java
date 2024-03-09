@@ -4,6 +4,7 @@ package com.msvc.vigilanciaEp.service;
 import com.msvc.vigilanciaEp.model.MesCasos;
 import com.msvc.vigilanciaEp.model.Vigilancia;
 import com.msvc.vigilanciaEp.model.VirusCasos;
+import com.msvc.vigilanciaEp.model.BacteriasCasos;
 import com.msvc.vigilanciaEp.repository.VigilanciaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,13 @@ public class VigilanciaService {
     //bola bola
 
     public List<Vigilancia> buscarPorNombreAlcaldia(String alcaldia) {
+
         return vigilanciaRepository.findByAlcaldia(alcaldia);
     }
 
     /*metodo*/
-    public void calcularCasosPredectibles(String nombreVirus, String mes) {
-        List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia("Iztapalapa");
+    public void calcularCasosPredectibles(String alcaldia,String nombreVirus, String mes) {
+        List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
 
         for (Vigilancia vigilancia1 : vigilancia) {
             for (VirusCasos virus : vigilancia1.getVirusCasos()) {
@@ -86,6 +88,16 @@ public class VigilanciaService {
             }
         }
 
+    }
+
+    public void calcularCasosPredectiblesBacterias(String alcaldia,String nombreBacterias,String mes){
+        List<Vigilancia> vigilancia2 = vigilanciaRepository.findByAlcaldia(alcaldia);
+
+        for(Vigilancia vigilanci2 : vigilancia2){
+            for(BacteriasCasos bacteriasCasos : vigilanci2.getBacteriasCasos()){
+
+            }
+        }
     }
 
     /*para iztapalapa agregar mas virus*/
@@ -173,5 +185,10 @@ public class VigilanciaService {
                 }
             }
         }
+
+
+
+
+
     }
 }
