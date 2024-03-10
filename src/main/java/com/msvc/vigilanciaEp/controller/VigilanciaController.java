@@ -121,7 +121,7 @@ public class VigilanciaController {
 
     }
 /*Eliminar bacterias*/
-    @DeleteMapping("/virus/{nombreBacterias}")
+    @DeleteMapping("/bacterias/{nombreBacterias}")
     public ResponseEntity<String> eliminarBacteriasPorNombre(@PathVariable String nombreBacterias) {
         try {
             vigilanciaService.deletePorNombreVirus(nombreBacterias);
