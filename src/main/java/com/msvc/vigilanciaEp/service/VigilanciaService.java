@@ -225,7 +225,7 @@ public class VigilanciaService {
 /*Calcular casos bacteria*/
     public void calcularCasosPredectiblesBacterias(String alcaldia ,String nombreBacterias, String mes) {
         List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
-
+ 
         for (Vigilancia vigilancia1 : vigilancia) {
             for (BacteriasCasos bacterias : vigilancia1.getBacteriasCasos()) {
                 if (bacterias.getNombreBacterias().equals(nombreBacterias)) {
