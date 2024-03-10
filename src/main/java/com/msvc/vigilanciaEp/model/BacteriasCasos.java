@@ -1,7 +1,7 @@
 package com.msvc.vigilanciaEp.model;
 
 import java.util.List;
-
+/**/
 public class BacteriasCasos {
     private String nombreBacterias;
     private List<MesCasos> casos;
