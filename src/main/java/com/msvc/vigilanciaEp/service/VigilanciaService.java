@@ -4,6 +4,7 @@ package com.msvc.vigilanciaEp.service;
 import com.msvc.vigilanciaEp.model.MesCasos;
 import com.msvc.vigilanciaEp.model.Vigilancia;
 import com.msvc.vigilanciaEp.model.VirusCasos;
+import com.msvc.vigilanciaEp.model.BacteriasCasos;
 import com.msvc.vigilanciaEp.repository.VigilanciaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,4 +174,106 @@ public class VigilanciaService {
             }
         }
     }
+
+    /*Parte Bacterias*/
+    public void agregarMesBacterias(String alcaldia, String nombreBacterias, MesCasos nuevoMes) {
+        List<Vigilancia> listVigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
+
+        for (Vigilancia vigilancia : listVigilancia) {
+            //busacmis el virus por su nombre
+            List<BacteriasCasos> bacteriasCasos = vigilancia.getBacteriasCasos();
+
+            for (BacteriasCasos bacteriasCasos1 : bacteriasCasos) {
+                if (bacteriasCasos1.getNombreBacterias().equals(nombreBacterias)) {
+                    //agregamos el nuevo mes
+                    List<MesCasos> casos = bacteriasCasos1.getCasos();
+                    casos.add(nuevoMes);
+
+                    //guardamos
+                    vigilanciaRepository.save(vigilancia);
+                    return;
+                }
+            }
+
+        }
+
+    }
+
+    public void actualizarCasosHistoricosBacterias(String alcaldia, String nombreBacterias, String mes, int nuevosCasosHistoricos) {
+        List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
+
+
+        for (Vigilancia vigilancia1 : vigilancia) {
+            for (BacteriasCasos bacterias : vigilancia1.getBacteriasCasos()) {
+                if (bacterias.getNombreBacterias().equals(nombreBacterias)) {
+                    List<MesCasos> casos = bacterias.getCasos();
+
+                    // Buscamos el mes específico
+                    for (MesCasos m : casos) {
+                        if (m.getMes().equals(mes)) {
+                            // Actualizar casosHistoricos para el mes específico
+                            m.setCasosHistoricos(nuevosCasosHistoricos);
+                            // Guardar los cambios en el mongo
+                            vigilanciaRepository.save(vigilancia1);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+/*Calcular casos bacterias*/
+    public void calcularCasosPredectiblesBacterias(String alcaldia ,String nombreBacterias, String mes) {
+        List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
+
+        for (Vigilancia vigilancia1 : vigilancia) {
+            for (BacteriasCasos bacterias : vigilancia1.getBacteriasCasos()) {
+                if (bacterias.getNombreBacterias().equals(nombreBacterias)) {
+                    List<MesCasos> casos = bacterias.getCasos();
+
+                    // // Buscar el mes anterior al mes actual
+
+                    MesCasos mesAnterior = null;
+                    for (MesCasos m : casos) {
+                        if (m.getMes().equals(mes)) {
+                            // El mes anterior es el mes anterior al mes actual
+                            break;
+                        }
+                        // Asigna el mes anterior en cada iteración
+                        mesAnterior = m;
+                    }
+
+                    if (mesAnterior != null) {
+                        // Realiza el cálculo de los casos predecibles
+                        double alpha = 0.2;
+                        int casosPredecibles = (int) Math.round(alpha * mesAnterior.getCasosHistoricos()
+                                + (1 - alpha) * mesAnterior.getCasosPredictibles());
+
+                        // Busca el mes actual
+                        MesCasos mesActual = null;
+                        for (MesCasos m : casos) {
+                            if (m.getMes().equals(mes)) {
+                                mesActual = m;
+                                break;
+                            }
+                        }
+
+                        if (mesActual != null) {
+                            // Establece los casos predecibles en el mes actual
+                            mesActual.setCasosPredictibles(casosPredecibles);
+                            vigilanciaRepository.save(vigilancia1);
+                            return;
+                        } else {
+                            logger.severe("Error al predecir: mes actual no encontrado");
+                        }
+                    } else {
+                        logger.severe("Error al hacer la predicción: mes anterior no encontrado");
+                    }
+                }
+
+            }
+        }
+
+    }
+
 }

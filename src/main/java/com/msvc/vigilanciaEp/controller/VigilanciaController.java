@@ -97,4 +97,54 @@ public class VigilanciaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar casos históricos.");
         }
     }
+
+    /*Parte bacterias*/
+    @PostMapping("/calcular-prediccion/{alcaldia}/{nombreBacterias}/{mes}")
+    public ResponseEntity<String> calcularPrediccionBacterias(@PathVariable String alcaldia ,@PathVariable String nombreBacterias,@PathVariable String mes){
+
+        try{
+            vigilanciaService.calcularCasosPredectiblesBacterias(alcaldia,nombreBacterias,mes);
+            return  ResponseEntity.ok("prediccion calculada");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
+        }
+    }
+/*Insertar mes Bacterias*/
+    @PostMapping("/alcaldia/{alcaldia}/bacterias/{nombreBacterias}/agregar-mes")
+    public ResponseEntity<String> agregarMesBacterias(@PathVariable String alcaldia, @PathVariable String nombreBacterias, @RequestBody MesCasos nuevoMes){
+        try{
+            vigilanciaService.agregarMesBacterias(alcaldia,nombreBacterias,nuevoMes);
+            return ResponseEntity.ok("mes agregado");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR AL INSERTAR MES");
+        }
+
+    }
+/*Eliminar bacterias*/
+    @DeleteMapping("/virus/{nombreBacterias}")
+    public ResponseEntity<String> eliminarBacteriasPorNombre(@PathVariable String nombreBacterias) {
+        try {
+            vigilanciaService.deletePorNombreVirus(nombreBacterias);
+            return ResponseEntity.ok("Bacteria eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al intentar eliminar el virus: " + e.getMessage());
+        }
+    }
+
+/*Actualizar casos bacterias*/
+    @PutMapping("/actualizar-casos-historicos/{alcaldia}/{nombreBacterias}/{mes}")
+    public ResponseEntity<String> actualizarCasosHistoricosBacterias(
+            @PathVariable String alcaldia,
+            @PathVariable String nombreBacterias,
+            @PathVariable String mes,
+            @RequestParam int nuevosCasosHistoricos) {
+        try {
+            vigilanciaService.actualizarCasosHistoricosBacterias(alcaldia, nombreBacterias, mes, nuevosCasosHistoricos);
+            return ResponseEntity.ok("Casos históricos actualizados correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar casos históricos.");
+        }
+    }
+
 }

@@ -7,9 +7,7 @@ public class VirusCasos {
     private String nombreVirus;
     private List<MesCasos> casos;
 
-    public String getNombreVirus() {
-        return nombreVirus;
-    }
+    public String getNombreVirus() {return nombreVirus;}
 
     public void setNombreVirus(String nombreVirus) {
         this.nombreVirus = nombreVirus;
