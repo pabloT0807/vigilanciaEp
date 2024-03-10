@@ -222,7 +222,7 @@ public class VigilanciaService {
             }
         }
     }
-/*Calcular casos bacterias*/
+/*Calcular casos bacteria*/
     public void calcularCasosPredectiblesBacterias(String alcaldia ,String nombreBacterias, String mes) {
         List<Vigilancia> vigilancia = vigilanciaRepository.findByAlcaldia(alcaldia);
 

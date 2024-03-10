@@ -132,7 +132,7 @@ public class VigilanciaController {
         }
     }
 
-/*Actualizar casos bacterias*/
+/*Actualizar casos bacteria*/
     @PutMapping("/actualizar-casos-historicos/{alcaldia}/{nombreBacterias}/{mes}")
     public ResponseEntity<String> actualizarCasosHistoricosBacterias(
             @PathVariable String alcaldia,
